@@ -16,5 +16,7 @@ import javax.ejb.Remote;
 @Remote()
 public interface ClienteBeanRemote extends InterfaceBeanRemote<Cliente> {
 
-    public Cliente getClientePorLogin(Login l);
+    public Cliente getDAOClientePorLogin(Login l);
+
+    public Cliente getDAOClienteId(Cliente cliente);
 }

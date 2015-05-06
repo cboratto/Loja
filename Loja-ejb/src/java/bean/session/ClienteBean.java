@@ -50,7 +50,12 @@ public class ClienteBean implements ClienteBeanRemote {
     }
 
     @Override
-    public Cliente getClientePorLogin(Login l) {
+    public Cliente getDAOClientePorLogin(Login l) {
         return clienteDao.listarPorLogin(l);
+    }
+
+    @Override
+    public Cliente getDAOClienteId(Cliente cliente) {
+        return clienteDao.listarPorId(cliente);
     }
 }

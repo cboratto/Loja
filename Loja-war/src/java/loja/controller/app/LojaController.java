@@ -6,9 +6,11 @@
 package loja.controller.app;
 
 import bean.session.CarrinhoBeanRemote;
+import bean.session.ClienteBeanRemote;
 import bean.session.ProdutoBeanRemote;
 import entity.bean.Carrinho;
 import entity.bean.Cliente;
+import entity.bean.Login;
 import entity.bean.Produto;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,16 +59,27 @@ public class LojaController extends AbstractApplicationController {
                 {
                     carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
                 }
+
+                //Agora temos de adicionar ao carrinho da sessao 
+                carrinhoBean.addItemCarrinho(produtoSelecionadoNatela);
+
+                //SESSAO DO USUARIO
                 //neste ponto sempre temos o carrinho, portanto, tentamos vincular ao usuário
                 Cliente cliente = (Cliente) this.getRequest().getSession().getAttribute("usuario");
                 if (cliente != null) {
                     //cliente esta logado, portanto vincular ele ao carrinho
-                    cliente.getLogin().addCarrinho((Carrinho) carrinhoBean.getObject());
-                    ((Carrinho)carrinhoBean.getObject()).setIdCliente(cliente.getLogin());
-                }
+                    ClienteBeanRemote clienteBean = (ClienteBeanRemote) context.lookup("ClienteBean");
+                    Cliente clienteAtualizado = clienteBean.getDAOClienteId(cliente);
 
-                //Agora temos de adicionar ao carrinho da sessao 
-                carrinhoBean.addItemCarrinho(produtoSelecionadoNatela);
+                    Carrinho carrinho = (Carrinho) carrinhoBean.getObject();
+                    Login login = clienteAtualizado.getLogin();
+                    ((Carrinho) carrinhoBean.getObject()).setIdCliente(login);
+
+                    login.addCarrinho(carrinho);
+                    clienteAtualizado.setLogin(login);
+                    //clienteAtualizado.getLogin().addCarrinho(carrinho);
+                    this.getRequest().getSession().setAttribute("usuario", clienteAtualizado);
+                }
 
                 //adiciona a sessao do usuario
                 this.getRequest().getSession().setAttribute("carrinho", carrinhoBean);

@@ -42,16 +42,17 @@ public class ClienteDAOImpl implements ClienteDAO {
         return listaCliente;
     }
 
-    public Cliente listarPorCpf(String numcpf) {
+    public Cliente listarPorId(Cliente cliente) {
         try {
             em = EntityManagerSingleton.getInstance().getConnection();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClienteDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         //valida se o usuário já esta cadastrado na base
-        Query query = em.createNamedQuery("Cliente.findByCpf");
-        Cliente cliente = (Cliente) query.setParameter("numcpf", numcpf).getSingleResult();
-        return cliente;
+        Query query = em.createNamedQuery("Cliente.findByIdCliente");
+        //Cliente clienteq = (Cliente) query.setParameter("numcpf", cliente.getNumCpf()).getSingleResult();
+        Cliente clienteq = (Cliente) query.setParameter("idCliente", cliente.getIdCliente()).getSingleResult();
+        return clienteq;
     }
 
     public Cliente listarPorLogin(Login login) {

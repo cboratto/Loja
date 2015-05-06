@@ -37,7 +37,7 @@ public class LoginController extends AbstractApplicationController {
             buscaLogin.setNamLogin(this.getRequest().getParameter("usuario"));
             buscaLogin.setDesPassword(this.getRequest().getParameter("senha"));
 
-            cliente = clienteBean.getClientePorLogin(buscaLogin);
+            cliente = clienteBean.getDAOClientePorLogin(buscaLogin);
             this.getRequest().getSession().setAttribute("usuario", cliente);
 
             this.setReturnPage("/FrontControllerServlet?control=Loja");

@@ -24,7 +24,7 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
     Carrinho carrinho;
 
     @Override
-    public Carrinho getObject() {
+    public Object getObject() {
         return carrinho;
     }
 
