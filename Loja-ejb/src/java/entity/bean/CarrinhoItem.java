@@ -80,7 +80,7 @@ public class CarrinhoItem implements Serializable {
     }
 
     public void addQtdItem() {
-        this.qtdItem++;
+        this.qtdItem=qtdItem+1;
     }
 
     public Double getValTotal() {

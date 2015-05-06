@@ -24,8 +24,8 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
     Carrinho carrinho;
 
     @Override
-    public Object getObject() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Carrinho getObject() {
+        return carrinho;
     }
 
     @Override
@@ -62,6 +62,7 @@ public class CarrinhoBean implements CarrinhoBeanRemote {
             for (int i = 0; i < listaCarrinhoItem.size(); i++) {
                 if (listaCarrinhoItem.get(i).getIdProduto().getIdProduto().equals(produto.getIdProduto())) {
                     listaCarrinhoItem.get(i).addQtdItem();
+                    break;
                 } else {
 
                     carrinhoItem.setIdProduto(produto);

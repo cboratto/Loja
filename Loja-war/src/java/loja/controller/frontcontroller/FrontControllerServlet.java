@@ -23,7 +23,6 @@ public class FrontControllerServlet extends HttpServlet {
             RequestDispatcher requestDispatcher;
             requestDispatcher = getServletContext().getRequestDispatcher(control.getReturnPage());
             requestDispatcher.forward(request, response);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

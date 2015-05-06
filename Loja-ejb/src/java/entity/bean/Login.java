@@ -6,6 +6,7 @@
 package entity.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,7 +23,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -146,8 +146,11 @@ public class Login implements Serializable {
         return carrinhoList;
     }
 
-    public void setCarrinhoList(List<Carrinho> carrinhoList) {
-        this.carrinhoList = carrinhoList;
+    public void addCarrinho(Carrinho carrinho) {
+        if (carrinhoList == null ){
+            carrinhoList = new ArrayList<Carrinho>();
+        }
+        this.carrinhoList.add(carrinho);
     }
 
     @PostConstruct

@@ -7,6 +7,8 @@ package loja.controller.app;
 
 import bean.session.CarrinhoBeanRemote;
 import bean.session.ProdutoBeanRemote;
+import entity.bean.Carrinho;
+import entity.bean.Cliente;
 import entity.bean.Produto;
 import java.util.List;
 import java.util.logging.Level;
@@ -55,6 +57,13 @@ public class LojaController extends AbstractApplicationController {
                 {
                     carrinhoBean = (CarrinhoBeanRemote) context.lookup("CarrinhoBean");
                 }
+                //neste ponto sempre temos o carrinho, portanto, tentamos vincular ao usuário
+                Cliente cliente = (Cliente) this.getRequest().getSession().getAttribute("usuario");
+                if (cliente != null) {
+                    //cliente esta logado, portanto vincular ele ao carrinho
+                    cliente.getLogin().addCarrinho((Carrinho) carrinhoBean.getObject());
+                    ((Carrinho)carrinhoBean.getObject()).setIdCliente(cliente.getLogin());
+                }
 
                 //Agora temos de adicionar ao carrinho da sessao 
                 carrinhoBean.addItemCarrinho(produtoSelecionadoNatela);
@@ -62,10 +71,8 @@ public class LojaController extends AbstractApplicationController {
                 //adiciona a sessao do usuario
                 this.getRequest().getSession().setAttribute("carrinho", carrinhoBean);
 
-                //Produto adicionado redireciona para loja
-                origem = "";
-                this.getRequest().setAttribute("orig", "inside");
-                this.setReturnPage("/FrontControllerServlet?control=Loja");
+                //Produto adicionado redireciona para loja                                
+                this.setReturnPage("/FrontControllerServlet?control=Loja&orig=inicio");
             } catch (Exception ex) {
                 Logger.getLogger(CadastrarController.class.getName()).log(Level.SEVERE, null, ex);
             }
